@@ -37,8 +37,10 @@ const solve = (arr) => {
 };
 
 const generateSudoku = () => {
-  let nineZeroArr = Array.from(Array(9).fill(0));
-  let board = Array.from(Array(9)).map(() => nineZeroArr);
+
+    let board = Array.from(Array(9)).map(
+      (innerArray) => (innerArray = Array.from(Array(9).fill(0)))
+    );
 
   for (let i = 0; i < 40; i++) {
     let randRow = Math.floor(Math.random() * 8);

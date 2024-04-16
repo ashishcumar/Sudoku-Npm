@@ -14,7 +14,7 @@ npm i js-sudoku-solver
 
 ```javascript
 
-import { getSudokuSolution, generateSudoku } from "sudoku-solver";
+import { getSudokuSolution, generateSudoku } from "js-sudoku-solver";
 
 1.) generateSudoku() :- returns 9*9 sudoku board with some empty fields to solve.
 
