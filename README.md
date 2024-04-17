@@ -13,22 +13,23 @@ npm i js-sudoku-solver
 ## Usage
 
 ```javascript
+// if "type":"module" in package.json
+import { generateSudokuBoard, getSudokuSolution } from "js-sudoku-solver";
 
-import {  generateSudokuBoard, getSudokuSolution } from "js-sudoku-solver";
+// if "type":"common" in package.json
+const { generateSudokuBoard, getSudokuSolution } = require("js-sudoku-solver");
 
-// Available Sudoke Board Types are "4x4","9x9","16x16".
+/// Available Sudoke Board Types are "4x4","9x9","16x16".
 
-// To Generate 4x4 Sudoku Board :- 
-   let sudokuBoard4x4 = generateSudokuBoard("4x4")
+/// To Generate 4x4 Sudoku Board :-
+let sudokuBoard4x4 = generateSudokuBoard("4x4");
 
-// To Generate 9x9 Sudoku Board :- 
-   let sudokuBoard9x9 = generateSudokuBoard("9x9")
+/// To Generate 9x9 Sudoku Board :-
+let sudokuBoard9x9 = generateSudokuBoard("9x9");
 
-// To Generate 16x16 Sudoku Board :- 
-   let sudokuBoard16x16 = generateSudokuBoard("16x16")
+/// To Generate 16x16 Sudoku Board :-
+let sudokuBoard16x16 = generateSudokuBoard("16x16");
 
-// To Solve Sudoku Pass sudoku array 
-   let sudokuSolution = getSudokuSolution(sudokuBoard4x4,"4x4")
-
-
+/// To Solve Sudoku Pass sudoku array
+let sudokuSolution = getSudokuSolution(sudokuBoard4x4, "4x4");
 ```
