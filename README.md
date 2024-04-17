@@ -14,10 +14,12 @@ npm i js-sudoku-solver
 
 ```javascript
 
-import { getSudokuSolution, generateSudoku } from "js-sudoku-solver";
+import {  generateSudokuBoard, getSudokuSolution } from "js-sudoku-solver";
 
-1.) generateSudoku() :- returns 9*9 sudoku board with some empty fields to solve.
+boardType = "4x4","9x9","16x16"
+boardToSolve = it is a array of array containing the digits
 
-2.) getSudokuSolution(boardToSolve) :- return solved sudoku board. 
+1.) generateSudokuBoard(boardType) :- pass the type of board you want to generate
+2.) getSudokuSolution(boardToSolve,boardType) :- return solved sudoku board.
 
 ```

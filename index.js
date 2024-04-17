@@ -1,28 +1,53 @@
-const isValid = (board, row, col, num) => {
-  for (let i = 0; i < 9; i++) {
-    if (board[row][i] == num || board[i][col] == num) return false;
-    let tempRow = 3 * Math.floor(row / 3) + Math.floor(i / 3);
-    let tempCol = 3 * Math.floor(col / 3) + (i % 3);
-    if (board[tempRow][tempCol] == num) false;
-  }
+const generateSudoku16x16 = require("./sudoku/Board-Generators/generateSudoku16x16");
+const generateSudoku4x4 = require("./sudoku/Board-Generators/generateSudoku4x4");
+const generateSudoku9x9 = require("./sudoku/Board-Generators/generateSudoku9x9");
+const Rules16x16 = require("./sudoku/Rules/Rules16x16");
+const Rules4x4 = require("./sudoku/Rules/Rules4x4");
+const Rules9x9 = require("./sudoku/Rules/Rules9x9");
+const isValid16x16 = require("./sudoku/Step-Validator/isValid16x16");
+const isValid4x4 = require("./sudoku/Step-Validator/isValid4x4");
+const isValid9x9 = require("./sudoku/Step-Validator/isValid9x9");
 
-  return true;
+const ruleMapper = (boardType) => {
+  if (!["4x4", "9x9", "16x16"].includes(boardType))
+    return { rulesError: "Invalid board type" };
+  const rules = {
+    "4x4": Rules4x4,
+    "9x9": Rules9x9,
+    "16x16": Rules16x16,
+  };
+
+  return rules[boardType];
 };
 
-const solve = (arr) => {
-  for (let i = 0; i < arr?.length; i++) {
-    for (let j = 0; j < arr[0]?.length; j++) {
-      if (arr[i][j] == 0) {
-        for (let n = 1; n <= 9; n++) {
-          if (isValid(arr, i, j, n)) {
-            arr[i][j] = n;
-            if (solve(arr).status === true) {
+const isValidFuncMapper = (boardType) => {
+  if (!["4x4", "9x9", "16x16"].includes(boardType))
+    return { rulesError: "Invalid board type" };
+  const validatorFunctions = {
+    "4x4": isValid4x4,
+    "9x9": isValid9x9,
+    "16x16": isValid16x16,
+  };
+
+  return validatorFunctions[boardType];
+};
+
+const solve = (board, boardType) => {
+  let isValid = isValidFuncMapper(boardType);
+  for (let i = 0; i < board?.length; i++) {
+    for (let j = 0; j < board[0]?.length; j++) {
+      if (board[i][j] == 0) {
+        for (let n = 1; n <= board?.length; n++) {
+          if (isValid(board, i, j, n)) {
+            board[i][j] = n;
+            if (solve(board, boardType).status === true) {
               return {
                 status: true,
-                solution: arr,
+                solution: board,
+                // rules: ruleMapper(boardType),
               };
             } else {
-              arr[i][j] = 0;
+              board[i][j] = 0;
             }
           }
         }
@@ -32,35 +57,28 @@ const solve = (arr) => {
   }
   return {
     status: true,
-    solution: arr,
+    solution: board,
+    // rules: ruleMapper(boardType),
   };
 };
 
-const generateSudoku = () => {
-
-    let board = Array.from(Array(9)).map(
-      (innerArray) => (innerArray = Array.from(Array(9).fill(0)))
-    );
-
-  for (let i = 0; i < 40; i++) {
-    let randRow = Math.floor(Math.random() * 8);
-    let randomCol = Math.floor(Math.random() * 8);
-    let randomVal = Math.floor(Math.random() * 9);
-
-    if (isValid(board, randRow, randomCol, randomVal)) {
-      board[randRow][randomCol] = randomVal;
-    }
-  }
-
-  return board;
-};
-
-const getSudokuSolution = (board) => {
-  let solvedVal = solve(board);
+const getSudokuSolution = (board, boardType) => {
+  if (!["4x4", "9x9", "16x16"].includes(boardType))
+    return {status:false, boardType: "Invalid board type" };
+  let solvedVal = solve(board, boardType);
   return solvedVal;
 };
 
-module.exports = {
-  getSudokuSolution,
-  generateSudoku,
+const generateSudokuBoard = (boardType) => {
+  if (!["4x4", "9x9", "16x16"].includes(boardType))
+    return { boardType: "Invalid board type" };
+  if (boardType === "4x4") {
+    return generateSudoku4x4();
+  } else if (boardType === "9x9") {
+    return generateSudoku9x9();
+  } else if (boardType === "16x16") {
+    return generateSudoku16x16();
+  }
 };
+
+module.exports = { generateSudokuBoard, getSudokuSolution };
