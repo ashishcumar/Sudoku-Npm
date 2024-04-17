@@ -64,8 +64,9 @@ const solve = (board, boardType) => {
 
 const getSudokuSolution = (board, boardType) => {
   if (!["4x4", "9x9", "16x16"].includes(boardType))
-    return {status:false, boardType: "Invalid board type" };
-  let solvedVal = solve(board, boardType);
+    return { status: false, boardType: "Invalid board type" };
+  let newBoard = board.map((row) => [...row]);
+  let solvedVal = solve(newBoard, boardType);
   return solvedVal;
 };
 

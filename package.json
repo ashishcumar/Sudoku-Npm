@@ -1,6 +1,6 @@
 {
   "name": "js-sudoku-solver",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "JS-Sudoku-Solver is a lightweight and efficient Javascript package for solving Sudoku puzzles programmatically. It provides a set of functions that can be easily integrated into your applications to solve Sudoku grids of varying complexity.",
   "main": "index.js",
   
